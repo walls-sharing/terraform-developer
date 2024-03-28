@@ -1,0 +1,127 @@
+###### Primitive Types ######
+variable "an_any" {
+  type    = any
+  default = null
+}
+
+variable "a_string" {
+  type    = string
+  default = "hello"
+}
+
+variable "a_number" {
+  type    = number
+  default = 123.45
+}
+
+variable "a_bool" {
+  type    = bool
+  default = true
+}
+
+###### List, Set, Tuple ######
+variable "a_list" {
+  type    = list(string)
+  default = ["red", "green", "red"]
+}
+
+variable "a_set" {
+  type    = set(string)
+  default = ["red", "green", "red"]
+}
+
+variable "a_tuple" {
+  type    = tuple([string, number, bool])
+  default = ["cat", 1, true]
+}
+
+###### Map, Object ######
+variable "a_map" {
+  type    = map(any)
+  default = { name = "Tee", age = 25 }
+}
+
+variable "an_object" {
+  type    = object({ name = string, age = optional(number) })
+  default = { name = "Tee", age = "25" }
+}
+
+variable "an_object_complex" {
+  type = object({
+    name     = string,
+    vehicles = list(object({ idx = number, item = string }))
+  })
+  default = {
+    name = "Tee",
+    vehicles = [
+      { idx = 1, item = "car" },
+      { idx = 2, item = "yatch" }
+    ]
+  }
+}
+
+
+resource "local_file" "sample_file_variables" {
+  filename = "test-variable.txt"
+  content  = <<-EOT
+    \$\{var.a_any} <-- Error "Cannot include a null value in a string template."
+    ${var.a_bool}
+    ${var.a_string}
+    ${var.a_number}
+    ${var.a_list[0]}
+    ${var.a_map["name"]}
+    ${length(var.a_set)}
+    \$\{var.an_object} <-- Error "var.an_object is object with 2 attributes"
+  EOT
+}
+
+
+output "out_any" {
+  description = "any"
+  value       = var.an_any
+}
+
+output "out_string" {
+  description = "string"
+  value       = var.a_string
+}
+
+output "out_number" {
+  description = "number"
+  value       = var.a_number
+}
+
+output "a_bool" {
+  description = "bool"
+  value       = var.a_bool
+}
+
+output "a_list" {
+  description = "list"
+  value       = var.a_list
+}
+
+output "a_set" {
+  description = "set"
+  value       = var.a_set
+}
+
+output "a_map" {
+  description = "map"
+  value       = var.a_map
+}
+
+output "a_tuple" {
+  description = "tuple"
+  value       = var.a_tuple
+}
+
+output "an_object" {
+  description = "object"
+  value       = var.an_object
+}
+
+output "a_object_complex_example" {
+  description = "complex object"
+  value       = var.an_object_complex
+}
