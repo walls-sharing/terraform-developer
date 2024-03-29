@@ -30,15 +30,15 @@ resource "google_cloud_run_service" "hello_terraform" {
 #   member = "allUsers"
 # }
 
-## Authoritative
-# data "google_iam_policy" "admin" {
+# # Authoritative
+# data "google_iam_policy" "all_users_invoker" {
 #   binding {
 #     role = "roles/run.invoker"
 #     members = ["allUsers"]
 #   }
 # }
-# resource "google_cloud_run_service_iam_policy" "policy" {
+# resource "google_cloud_run_service_iam_policy" "allow_all_users_invoker" {
 #   service = google_cloud_run_service.hello_terraform.name
 #   location = google_cloud_run_service.hello_terraform.location
-#   policy_data = data.google_iam_policy.admin.policy_data
+#   policy_data = data.google_iam_policy.all_users_invoker.policy_data
 # }
