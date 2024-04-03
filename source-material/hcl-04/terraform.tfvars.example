@@ -1,3 +1,0 @@
-filename               = "sample-tfvars.txt"
-file_content           = "Hello from tfvars"
-file_content_sensitive = "Sensitive from tfvars"
