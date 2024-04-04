@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.7.4"
+  required_version = "> 1.5.7"
   required_providers {
     google = {
       source  = "hashicorp/google"
@@ -55,6 +55,7 @@ resource "google_storage_bucket_object" "terraform_logo_3" {
 # Allow public access to object
 # To view file: https://storage.googleapis.com/[bucket]/terraform-logo1.png
 resource "google_storage_object_access_control" "public_terraform_logo_1" {
+  # depends_on = [ google_storage_bucket_object.terraform_logo_1 ] // explicit dependency
   object = google_storage_bucket_object.terraform_logo_1.name  // implicit dependency
   bucket = google_storage_bucket.terraform_public_bucket.name
   role   = "READER"
@@ -102,7 +103,7 @@ resource "google_storage_object_access_control" "public_terraform_logo_3" {
 # }
 
 
-## LOOP: Method 3 ##
+## LOOP: Method 3 (Advanced) ##
 # locals {
 #   files = [
 #     {
