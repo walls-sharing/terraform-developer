@@ -1,5 +1,5 @@
 terraform {
-  required_version = "> 1.5.7"
+  required_version = "> 1.5.7" // You're likely use "~> 1.5.1" means 1.5.x but not 1.6.x
   required_providers {
     google = {
       source  = "hashicorp/google"
